@@ -15,7 +15,7 @@
 - What is the difference between a Docker container and a Docker image?  
     I don't know if I can use the analogy of class and object in Object-oriented Programming(OOP). A ```Docker``` image is a read-only immutable template that defines how a container will be realized. A ```Docker``` container is a runtime instance of a ```Docker``` image. It is created when the docker run command is executed.
 - In what way will spinach helps you to master DevOps?
-  
+
     ```
     This is like spinaches for programmers: at first, it feels strange and does not taste good, 
     but in the end, you become an incredibly strong sailor that loves those tools and is a master at using them.
@@ -23,6 +23,47 @@
     Yes, Yes, I copied the quote but it answers the question quite well, I guess.
 
 #### SETUP TIME
+Installation of Docker, Docker Compose. I wrote a Notion on it. Maybe, I will make it public. Maybe not.  
+Installation of PostgreSQL client. I chose the command-line tool (postgresql).
+
 #### HANDS ON THE RUDDER
+1. Find the official PostgreSQL image and import it on my machine.  
+    I went to [Docker hub](https://hub.docker.com/search) and searched for postgresql. I found the official image : ```postgres```.  
+    There is also a command-line way to find the official image :
+    > cli
+    ```bash
+    docker search postgresql --filter=is-official=true
+    ```
+    > Output 
+    ```bash
+    NAME       DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+    postgres   The PostgreSQL object-relational database sy…   12148     [OK]       
+    ```
+    For the import :
+    ```bash
+    docker pull postgres
+    ```
+2. Show how many images I have on my machine.
+    > cli 
+
+    ```bash
+    docker images|awk '{print $1}' |grep '^[a-z]' |wc -l
+    ```
+
+    > Output
+    ```bash
+    31
+    ```
+3. Run a PostgreSQL container.
+    ```bash
+    docker run -it postgres /bin/bash
+    ```
+4. Show containers running on my machine. 
+    ```bash
+    docker ps
+    ```
+    Yes, I see the container ID of PostgreSQl.
+5. Is your previous PostgreSQL container still running? Fine, stop it.
+
 ### STEP 1 - TIME TO CRAFT
 ### STEP 2 - TIME TO CRAFT THE CRAFTER
