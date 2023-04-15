@@ -52,18 +52,37 @@ Installation of PostgreSQL client. I chose the command-line tool (postgresql).
 
     > Output
     ```bash
-    31
+    7
     ```
 3. Run a PostgreSQL container.
     ```bash
     docker run -it postgres /bin/bash
     ```
 4. Show containers running on my machine. 
+    > cli
     ```bash
     docker ps
     ```
-    Yes, I see the container ID of PostgreSQl.
-5. Is your previous PostgreSQL container still running? Fine, stop it.
+     Output
+    Yes, I see the container ID of PostgreSQl Obvious.
+5. Is my previous PostgreSQL container still running?
+   Yes it did. Ill stop it.
+    > cli
+    ```bash
+    docker stop 
+    ```
+6. Remove the container.
+    > cli
+    ```bash
+    docker rm 
+    ```
+7. Run a container with PostgreSQL 9.4 version.
+    > cli
+    ```bash
+    docker run postgres9.4
+    ```
+8. 
+
 
 ### STEP 1 - TIME TO CRAFT
 ### STEP 2 - TIME TO CRAFT THE CRAFTER
