@@ -143,5 +143,15 @@
 
 
 ### STEP 1 - TIME TO CRAFT
-I wrote the [Dockerfile](app/Dockerfile).
+- I wrote the [Dockerfile](app/Dockerfile) which respects the specifications given.
+- I built my image.
+    > cli
+    ```bash
+        docker build -t mynodeapppopeyebootstrap app
+    ```
+- I launched my container
+    > cli
+    ```bash
+        docker run --name popeyebtcontainer -p 85:3000 -d mynodeapppopeyebootstrap
+    ```
 ### STEP 2 - TIME TO CRAFT THE CRAFTER
