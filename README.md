@@ -149,9 +149,11 @@
     ```bash
         docker build -t mynodeapppopeyebootstrap app
     ```
-- I launched my container
+- I launched my container.
     > cli
     ```bash
         docker run --name popeyebtcontainer -p 85:3000 -d mynodeapppopeyebootstrap
     ```
 ### STEP 2 - TIME TO CRAFT THE CRAFTER
+- I wrote the [docker-compose.yml](app/docker-compose.yml) file.
+- I launched the infrastructure with ```docker compose up```.
