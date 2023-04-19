@@ -10,7 +10,7 @@ services:
       - popeyebootstrap
 
   db:
-    image: postgres:9.4
+    image: postgres:15.2-alpine
     ports:
       - "5432:5432"
     networks:
