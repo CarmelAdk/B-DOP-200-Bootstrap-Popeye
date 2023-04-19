@@ -1,0 +1,22 @@
+version: "3"
+services:
+  hello-world:
+    build: .
+    ports:
+      - "8080:3000"
+    depends_on:
+      - db
+    networks:
+      - popeyebootstrap
+
+  db:
+    image: postgres:9.4
+    ports:
+      - "5432:5432"
+    networks:
+      - popeyebootstrap
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=popeye
+networks:
+  popeyebootstrap:
