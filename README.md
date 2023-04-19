@@ -23,8 +23,24 @@
     Yes, Yes, I copied the quote but it answers the question quite well, I guess.
 
 #### SETUP TIME
-Installation of Docker, Docker Compose. I wrote a Notion on it. Maybe, I will make it public. Maybe not.  
-Installation of PostgreSQL client. I chose the command-line tool (postgresql).
+1. Installation of Docker, Docker Compose. I wrote a Notion on it. Maybe, I will publish it. Maybe not.  
+2. Installation of PostgreSQL client. I chose the command-line tool (postgresql).  
+    - Update the package index and install the package.
+    > cli
+    ```bash
+    sudo apt update  
+    sudo apt install postgre-sql 
+    ```
+    - Check if installation is successful.
+    > cli
+    ```bash
+    psql --version
+    ```
+    > Output 
+    ```bash
+    psql (PostgreSQL) 12.14 (Ubuntu 12.14-0ubuntu0.20.04.1)      
+    ```
+    
 
 #### HANDS ON THE RUDDER
 1. Find the official PostgreSQL image and import it on my machine.  
@@ -49,40 +65,83 @@ Installation of PostgreSQL client. I chose the command-line tool (postgresql).
     ```bash
     docker images|awk '{print $1}' |grep '^[a-z]' |wc -l
     ```
-
     > Output
     ```bash
     7
     ```
 3. Run a PostgreSQL container.
     ```bash
-    docker run -it postgres /bin/bash
+    docker run --name="postgres" -d postgres
     ```
 4. Show containers running on my machine. 
     > cli
     ```bash
     docker ps
     ```
-     Output
-    Yes, I see the container ID of PostgreSQl Obvious.
+    > Output 
+    ```bash
+    CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS         PORTS      NAMES
+    c9a2fa12d115   postgres   "docker-entrypoint.s…"   5 minutes ago   Up 5 minutes   5432/tcp   postgres
+    ```
+    Yes, I see the container ID of PostgreSQl (obvious!).
 5. Is my previous PostgreSQL container still running?
-   Yes it did. Ill stop it.
+   Yes it did. I'll stop it.
     > cli
     ```bash
-    docker stop 
+    docker stop c9a2fa12d115
     ```
 6. Remove the container.
     > cli
     ```bash
-    docker rm 
+    docker rm c9a2fa12d115
     ```
 7. Run a container with PostgreSQL 9.4 version.
     > cli
     ```bash
-    docker run postgres9.4
+    docker run -d postgres:9.4
     ```
-8. 
+8. Make the needed port is exposed on my machine.  
+    The official Docker image for PostgreSQL uses the default port 5432 for communication between clients and the PostgreSQL server.
+    When I tried to connect myself to the server :
+    > cli
+    ```bash
+    psql "postgres://postgres:postgres@localhost:5432/postgres"
+    ```  
+    > Output 
+    ```bash
+    psql: error: could not connect to server: Connexion refusée
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+    ```  
+    Let's fix it.  
+    I chose the port 5432 on my machine in order to map it to the port 5432 of the container.
+    ```bash
+    docker run --name="postgres" -p 5432:5432 -d postgres
+    ```
+    Now, when I retry... 
+    > Output 
+    ```bash
+
+    ```  
+
+9. Change PostgreSQL’s password (when executing docker run).
+    ```bash
+    docker run --name="postgres" -e POSTGRES_PASSWORD=psw -d postgres
+    ```
+10. 
+11. Find out which day it is in the container.
+    > cli
+    ```bash
+    
+    ```
+    > Output 
+    ```bash
+    ```
+12. Display the logs of my container.
+
+    To display in real time.
 
 
 ### STEP 1 - TIME TO CRAFT
+I wrote the [Dockerfile](app/Dockerfile).
 ### STEP 2 - TIME TO CRAFT THE CRAFTER
