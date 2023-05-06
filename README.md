@@ -88,17 +88,14 @@
     Yes, I see the container ID of PostgreSQl (obvious!).
 5. Is my previous PostgreSQL container still running?
    Yes it did. I'll stop it.
-    > cli
     ```bash
     docker stop 8faafcc66b6a
     ```
 6. Remove the container.
-    > cli
     ```bash
     docker rm 8faafcc66b6a
     ```
 7. Run a container with PostgreSQL 9.4 version.
-    > cli
     ```bash
     docker run --name="postgres" -e POSTGRES_PASSWORD=psw -d postgres:9.4
     ```
