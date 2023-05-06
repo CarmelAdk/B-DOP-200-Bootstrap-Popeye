@@ -72,8 +72,9 @@
     ```
 3. Run a PostgreSQL container.
     ```bash
-    docker run --name="postgres" -d postgres
+    docker run --name="postgres" -e POSTGRES_PASSWORD=psw -d postgres
     ```
+    Without the environment variable POSTGRES_PASSWORD, the container won't run.
 4. Show containers running on my machine. 
     > cli
     ```bash
@@ -82,31 +83,31 @@
     > Output 
     ```bash
     CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS         PORTS      NAMES
-    c9a2fa12d115   postgres   "docker-entrypoint.s…"   5 minutes ago   Up 5 minutes   5432/tcp   postgres
+    8faafcc66b6a   postgres   "docker-entrypoint.s…"   7 seconds ago   Up 3 seconds   5432/tcp   postgres
     ```
     Yes, I see the container ID of PostgreSQl (obvious!).
 5. Is my previous PostgreSQL container still running?
    Yes it did. I'll stop it.
     > cli
     ```bash
-    docker stop c9a2fa12d115
+    docker stop 8faafcc66b6a
     ```
 6. Remove the container.
     > cli
     ```bash
-    docker rm c9a2fa12d115
+    docker rm 8faafcc66b6a
     ```
 7. Run a container with PostgreSQL 9.4 version.
     > cli
     ```bash
-    docker run -d postgres:9.4
+    docker run --name="postgres" -e POSTGRES_PASSWORD=psw -d postgres:9.4
     ```
 8. Make the needed port is exposed on my machine.  
     The official Docker image for PostgreSQL uses the default port 5432 for communication between clients and the PostgreSQL server.
     When I tried to connect myself to the server :
     > cli
     ```bash
-    psql "postgres://postgres:postgres@localhost:5432/postgres"
+    psql "postgres://postgres:psw@localhost:5432/postgres"
     ```  
     > Output 
     ```bash
@@ -117,41 +118,56 @@
     Let's fix it.  
     I chose the port 5432 on my machine in order to map it to the port 5432 of the container.
     ```bash
-    docker run --name="postgres" -p 5432:5432 -d postgres
+    docker run --name="postgres" -p 5432:5432 -d postgres:9.4
     ```
     Now, when I retry... 
     > Output 
     ```bash
+    psql (12.14 (Ubuntu 12.14-0ubuntu0.20.04.1), server 9.4.26)
+    Type "help" for help.
 
+    postgres=# 
     ```  
+    It works ! I got a prompt.
 
-9. Change PostgreSQL’s password (when executing docker run).
+9. Change default informations (when executing docker run).
     ```bash
-    docker run --name="postgres" -e POSTGRES_PASSWORD=psw -d postgres
+    docker run --name="postgres" -p 5432:5432 -e POSTGRES_PASSWORD=psw \
+    -e POSTGRES_USER=carmeladk -e POSTGRES_DB=my_db -d postgres:9.4
     ```
-10. 
+10. Make data persistant.
+    I created directory on my hard drive : ```/home/$USER/postgredata```.  
+    I map this directory to the data directory in the container.
+    ```bash
+    docker run --name="postgres" -p 5432:5432 -e POSTGRES_PASSWORD=psw \
+    -e POSTGRES_USER=carmeladk -e POSTGRES_DB=my_db \
+    -v /home/$USER/postgredata:/var/lib/postgresql/data -d postgres:9.4     
+    ```
 11. Find out which day it is in the container.
     > cli
     ```bash
-    
+    docker exec -it postgres date
     ```
     > Output 
     ```bash
+    Wed 19 Apr 2023 04:55:29 PM UTC
     ```
 12. Display the logs of my container.
-
-    To display in real time.
-
+    ```bash
+    docker logs postgres
+    ```
+    Display in real time.
+    ```bash
+    docker logs -f postgres
+    ```
 
 ### STEP 1 - TIME TO CRAFT
 - I wrote the [Dockerfile](app/Dockerfile) which respects the specifications given.
 - I built my image.
-    > cli
     ```bash
         docker build -t mynodeapppopeyebootstrap app
     ```
 - I launched my container.
-    > cli
     ```bash
         docker run --name popeyebtcontainer -p 85:3000 -d mynodeapppopeyebootstrap
     ```
