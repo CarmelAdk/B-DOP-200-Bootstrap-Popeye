@@ -1,5 +1,6 @@
 # B2 - Introduction to DevOps
 ##  Popeye - Bootstrap 
+*Eat some spinaches and become a true Docker sailor*
 
 
 ### STEP 0 - HELLO DOCKER!
