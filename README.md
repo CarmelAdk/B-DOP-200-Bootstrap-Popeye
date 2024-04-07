@@ -24,6 +24,7 @@
     Yes, Yes, I copied the quote but it answers the question quite well, I guess.
 
 #### SETUP TIME
+I'm using Ubuntu 20.04.
 1. Installation of Docker, Docker Compose. I wrote a Notion on it. Maybe, I will publish it. Maybe not.  
 2. Installation of PostgreSQL client. I chose the command-line tool (postgresql).  
     - Update the package index and install the package.
